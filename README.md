@@ -1,52 +1,26 @@
-# Sistema de Gestión Hotelera
+# 🏨 Sistema de Gestión Hotelera
 
-Sistema web desarrollado para la administración de un hotel, permitiendo la gestión de usuarios, clientes, habitaciones, categorías, pisos, recepciones, ventas y productos.
+Aplicación web para la administración integral de un hotel: usuarios, clientes, habitaciones, categorías, pisos, recepciones, ventas y productos.
 
-## Integrantes
+**Grupo 7 · Cibertec**
 
-* Grupo 7
-* Cibertec
+## Stack
 
-## Tecnologías Utilizadas
-
-### Frontend
-
-* Angular
-* Bootstrap 5
-* TypeScript
-* SweetAlert2
-
-### Backend
-
-* Spring Boot
-* Spring Security
-* JWT
-* JPA / Hibernate
-* Maven
-
-### Base de Datos
-
-* PostgreSQL
+| Frontend | Backend | Base de Datos |
+|---|---|---|
+| Angular, TypeScript, Bootstrap 5, SweetAlert2 | Spring Boot, Spring Security, JWT, JPA/Hibernate, Maven | PostgreSQL |
 
 ## Funcionalidades
 
-* Autenticación mediante JWT
-* Gestión de usuarios
-* Gestión de clientes
-* Gestión de habitaciones
-* Gestión de categorías
-* Gestión de pisos
-* Registro de recepciones
-* Registro de ventas
-* Control de habitaciones ocupadas
-* Gestión de productos
-* Registro de salida de habitaciones
+- Autenticación JWT
+- Gestión de usuarios, clientes, habitaciones, categorías y pisos
+- Registro de recepciones, ventas y salida de habitaciones
+- Control de habitaciones ocupadas y gestión de productos
 
-## Estructura del Proyecto
+## Estructura
 
 ```text
 Proyecto Ht/
-│
 ├── FrontendHotel/
 ├── BackendHotel/
 └── hotel.sql
@@ -54,83 +28,37 @@ Proyecto Ht/
 
 ## Instalación
 
-### 1. Clonar el repositorio
-
 ```bash
 git clone https://github.com/Yax-CalleCas/Sistema-de-Gesti-n-Hotelera.git
 ```
 
-### 2. Base de Datos
+**1. Base de datos** — Crear una BD en PostgreSQL y ejecutar `hotel.sql`.
 
-Crear una base de datos PostgreSQL y ejecutar el script:
-
-```sql
-hotel.sql
-```
-
-### 3. Configurar Backend
-
-Editar el archivo:
-
-```properties
-src/main/resources/application.properties
-```
-
-Configurar:
-
+**2. Backend** — Editar `src/main/resources/application.properties`:
 ```properties
 spring.datasource.url=jdbc:postgresql://localhost:5432/nombre_bd
 spring.datasource.username=postgres
 spring.datasource.password=tu_password
 ```
-
-### 4. Ejecutar Backend
-
+Ejecutar:
 ```bash
 mvn clean install
 mvn spring-boot:run
 ```
+📍 `http://localhost:8081`
 
-Servidor:
-
-```text
-http://localhost:8081
-```
-
-### 5. Ejecutar Frontend
-
-Ingresar a la carpeta del frontend:
-
+**3. Frontend**
 ```bash
 cd hotel
-```
-
-Instalar dependencias:
-
-```bash
 npm install
-```
-
-Ejecutar Angular:
-
-```bash
 ng serve
 ```
+📍 `http://localhost:4200`
 
-Aplicación:
+## Acceso
 
-```text
-http://localhost:4200
-```
-
-## Credenciales de Acceso
-
-Registrar usuarios desde el sistema o utilizar los registros existentes en la base de datos.
-
-## Repositorio
-
-https://github.com/Yax-CalleCas/Sistema-de-Gesti-n-Hotelera
+Registrar usuarios desde el sistema o usar los ya existentes en la base de datos.
 
 ## Licencia
 
-Proyecto académico desarrollado para fines educativos en Cibertec.
+Proyecto académico — Cibertec.
