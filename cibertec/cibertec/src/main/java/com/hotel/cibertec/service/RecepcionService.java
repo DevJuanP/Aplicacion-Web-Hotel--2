@@ -12,6 +12,8 @@ public interface RecepcionService {
     RecepcionDto guardar(RecepcionDto dto);
     RecepcionDto actualizar(Integer id, RecepcionDto dto);
     void eliminar(Integer id);
+    List<RecepcionDto> listarPorCliente(Integer idCliente);
+
 
     Boolean procesarSalida(Integer idRecepcion, Integer idHabitacion, BigDecimal penalidad, BigDecimal total);
 }

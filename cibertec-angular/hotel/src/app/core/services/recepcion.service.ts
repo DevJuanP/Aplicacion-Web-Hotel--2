@@ -1,26 +1,28 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, shareReplay, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { ApiResponse } from '../models/ApiResponse';
 import { Recepcion } from '../models/recepcion.model';
 
 @Injectable({ providedIn: 'root' })
-@Injectable({ providedIn: 'root' })
-
 export class RecepcionService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = 'http://localhost:8081/api/recepcion';
 
+  listar(): Observable<ApiResponse<Recepcion[]>> {
+    return this.http.get<ApiResponse<Recepcion[]>>(`${this.baseUrl}/listar`).pipe(
+      tap(res => {
+        if (res.data) {
+          res.data = res.data.filter((item: any) => item.idRecepcion !== undefined);
+        }
+      })
+    );
+  }
 
-listar(): Observable<ApiResponse<Recepcion[]>> {
-  return this.http.get<ApiResponse<Recepcion[]>>(`${this.baseUrl}/listar`).pipe(
-    tap(res => {
-      if (res.data) {
-        res.data = res.data.filter((item: any) => item.idRecepcion !== undefined);
-      }
-    })
-  );
-}
+  // Nuevo método para listar reservas por cliente
+  listarPorCliente(idCliente: number): Observable<ApiResponse<Recepcion[]>> {
+    return this.http.get<ApiResponse<Recepcion[]>>(`${this.baseUrl}/cliente/${idCliente}`);
+  }
 
   registrar(dto: Recepcion): Observable<ApiResponse<Recepcion>> {
     return this.http.post<ApiResponse<Recepcion>>(`${this.baseUrl}/registrar`, dto);

@@ -30,4 +30,19 @@ public interface RecepcionRepository extends JpaRepository<Recepcion, Integer> {
     List<Recepcion> findByHabitacionIdAndEstadoWithDetails(
             @Param("idHabitacion") Integer idHabitacion,
             @Param("estado") Boolean estado);
+
+    @Query("SELECT r FROM Recepcion r WHERE r.cliente.idPersona = :idCliente AND r.estado = true")
+    Optional<Recepcion> findByIdClienteAndEstadoTrue(@Param("idCliente") Integer idCliente);
+//detalles de reserva cliente
+    @Query("SELECT r FROM Recepcion r " +
+            "LEFT JOIN FETCH r.cliente " +
+            "LEFT JOIN FETCH r.habitacion h " +
+            "LEFT JOIN FETCH h.categoria " +
+            "LEFT JOIN FETCH h.piso " +
+            "LEFT JOIN FETCH h.estadoHabitacion " +
+            "WHERE r.cliente.idPersona = :idCliente AND r.estado = :estado")
+    List<Recepcion> findByClienteIdAndEstadoWithDetails(
+            @Param("idCliente") Integer idCliente,
+            @Param("estado") Boolean estado);
+
 }

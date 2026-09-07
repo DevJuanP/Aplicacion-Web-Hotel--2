@@ -76,7 +76,7 @@ export class Procesarsalida implements OnInit {
 
         const serviciosMapeados: ItemServicio[] = listaVentas.flatMap((venta: Venta) =>
           (venta.detalles ?? []).map((d: DetalleVenta) => ({
-            // IMPORTANTE: Asegúrate que el campo se llame 'nombreProducto' si así viene del DTO
+
             producto: d.nombreProducto ?? 'Producto',
             cantidad: d.cantidad,
             precioUnitario: d.precioUnitario,

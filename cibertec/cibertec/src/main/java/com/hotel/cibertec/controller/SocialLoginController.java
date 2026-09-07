@@ -6,6 +6,7 @@ import com.hotel.cibertec.security.JwtService;
 import com.hotel.cibertec.security.SocialAuthValidator;
 import com.hotel.cibertec.service.SocialAuthService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,31 +16,38 @@ import org.springframework.web.bind.annotation.*;
 public class SocialLoginController {
     private final SocialAuthService socialAuthService;
     private final JwtService jwtService;
-    private final SocialAuthValidator socialAuthValidator; // Inyectamos el validador
+    private final SocialAuthValidator socialAuthValidator;
 
     @PostMapping("/social")
     public ResponseEntity<ApiResponse<LoginResponseDto>> socialLogin(@RequestBody SocialLoginRequestDto request) {
 
-        // 1. VALIDACIÓN OBLIGATORIA: Verifica que el token sea genuino de Google/Facebook
+        // 1. Validación del Token
         if (!socialAuthValidator.isValidToken(request.getToken(), request.getProvider())) {
-            throw new RuntimeException("Error: Token de autenticación externo no válido");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body(ApiResponse.error("Token de autenticación externo no válido"));
         }
 
-        // 2. Procesa el login (buscar en BD o registrar)
+        // 2. Procesar Login (Registro o búsqueda)
         Persona persona = socialAuthService.processSocialLogin(
                 request.getNombre(),
                 request.getApellido(),
                 request.getCorreo()
         );
 
-        // 3. Genera tu JWT para que el resto de tu app (Spring Security) lo reconozca
+        // 3. Generar token y mapear respuesta
         String token = jwtService.generateToken(persona.getCorreo());
+
+        // Mapeo seguro del rol
+        String nombreTipoPersona = (persona.getTipoPersona() != null)
+                ? persona.getTipoPersona().getDescripcion() //  TipoPersonaDto
+                : "Cliente";
 
         LoginResponseDto response = LoginResponseDto.builder()
                 .idPersona(persona.getIdPersona())
                 .nombre(persona.getNombre())
                 .apellido(persona.getApellido())
                 .correo(persona.getCorreo())
+                .tipoPersona(nombreTipoPersona)
                 .token(token)
                 .build();
 

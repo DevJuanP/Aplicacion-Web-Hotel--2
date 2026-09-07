@@ -115,18 +115,38 @@ export const routes: Routes = [
   // ===================================================================
   // RUTAS DE CLIENTES (Protegidas: Solo Cliente)
   // ===================================================================
-  {
-    path: 'cliente',
-    canActivate: [authGuard],
-    data: { roles: ['Cliente'] },
-    children: [
-      {
-        path: '',
-        loadComponent: () => import('./features/cliente/cliente-dashboard/cliente-dashboard').then(m => m.ClienteDashboard)
-      }
-
-    ]
-  },
+ {
+  path: 'cliente',
+  canActivate: [authGuard],
+  component: Layout,
+  data: { roles: ['Cliente'] },
+  children: [
+    {
+      path: '',
+      loadComponent: () => import('./features/cliente/cliente-dashboard/cliente-dashboard').then(m => m.ClienteDashboard)
+    },
+    {
+      path: 'catalogo',
+      loadComponent: () => import('./features/cliente/Productos Cliente/catalogo-producto-component/catalogo-producto-component').then(m => m.CatalogoProductoComponent)
+    },
+    {
+      path: 'carrito/:id',
+      loadComponent: () => import('./features/cliente/Productos Cliente/catalogo-producto-component/Carrito/carrito-detalle/carrito-detalle').then(m => m.CarritoDetalle)
+    },
+    {
+      path: 'habitacioncliente',
+      loadComponent: () => import('./features/cliente/HabitacionCliente/habitacion-cliente-catalogo/habitacion-cliente').then(m => m.HabitacionCliente)
+    },
+    {
+      path: 'datalleAlquiler/:id',
+      loadComponent: () => import('./features/cliente/HabitacionCliente/AlquilerDetalle/alquiler-componente/alquiler-componente').then(m => m.AlquilerComponente)
+    },
+    {
+      path: 'habitacionesocupadasCliente',
+      loadComponent: () => import('./features/cliente/clientehabitacionesocupadas/listahabitacionesocupadascliente').then(m => m.ClientehabitacionesdISPONIBLES)
+    }
+  ]
+},
 
 {
   path: 'admin/resumensalida/:id',

@@ -6,17 +6,41 @@
     </div>
 
     <nav class="nav nav-pills flex-column mb-auto gap-1">
-      <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link text-white"><i class="bi bi-speedometer2 me-2"></i> Admin</a>
-      <a routerLink="/admin/personas" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-people me-2"></i> Usuarios</a>
-      <a routerLink="/admin/clientes" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-person-vcard me-2"></i> Clientes</a>
-      <a routerLink="/admin/habitacion" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-door-open me-2"></i> G. Habitaciones</a>
-      <a routerLink="/admin/categorias" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-tags me-2"></i>G. Categorías</a>
-      <a routerLink="/admin/piso" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-layers me-2"></i>G. Pisos</a>
-      <a routerLink="/admin/crudproductos" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-box-seam me-2"></i> Productos</a>
-      <a routerLink="/admin/recepcion" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-clipboard-check me-2"></i> G. Recepción</a>
-      <a routerLink="/admin/venta" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-house-lock me-2"></i> Venta Productos </a>
-      <a routerLink="/admin/salidaHabitacion" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-box-arrow-left me-2"></i> Recepción Salida</a>
-      <a routerLink="/admin/reportes" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-file-earmark-bar-graph me-2"></i> Reportes</a>
+
+      @if (hasRole('Administrador')) {
+        <a routerLink="/admin" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link text-white"><i class="bi bi-speedometer2 me-2"></i> Admin</a>
+        <a routerLink="/admin/personas" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-people me-2"></i> Usuarios</a>
+        <a routerLink="/admin/clientes" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-person-vcard me-2"></i> Clientes</a>
+        <a routerLink="/admin/habitacion" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-door-open me-2"></i> G. Habitaciones</a>
+        <a routerLink="/admin/categorias" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-tags me-2"></i> G. Categorías</a>
+        <a routerLink="/admin/piso" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-layers me-2"></i> G. Pisos</a>
+        <a routerLink="/admin/crudproductos" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-box-seam me-2"></i> Productos</a>
+        <a routerLink="/admin/recepcion" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-clipboard-check me-2"></i> G. Recepción</a>
+        <a routerLink="/admin/venta" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-house-lock me-2"></i> Venta Productos</a>
+        <a routerLink="/admin/salidaHabitacion" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-box-arrow-left me-2"></i> Recepción Salida</a>
+        <a routerLink="/admin/reportes" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-file-earmark-bar-graph me-2"></i> Reportes</a>
+      }
+
+      @if (hasRole('Empleado')) {
+        <a routerLink="/empleado" routerLinkActive="active" class="nav-link text-white"><i class="bi bi-speedometer2 me-2"></i> Dashboard Empleado</a>
+      }
+
+@if (hasRole('Cliente')) {
+  <a routerLink="/cliente" routerLinkActive="active" class="nav-link text-white">
+    <i class="bi bi-person-circle me-2"></i> Mi Perfil
+  </a>
+  <a routerLink="/cliente/catalogo" routerLinkActive="active" class="nav-link text-white">
+    <i class="bi bi-box-seam me-2"></i> Mi Catálogo
+  </a>
+  <a routerLink="/cliente/habitacioncliente" routerLinkActive="active" class="nav-link text-white">
+    <i class="bi bi-box-seam me-2"></i> Habitaciones
+  </a>
+  <a routerLink="/cliente/habitacionesocupadasCliente" routerLinkActive="active" class="nav-link text-white">
+    <i class="bi bi-door-open me-2"></i> Mis Habitaciones Ocupadas
+  </a>
+
+
+      }
     </nav>
   </aside>
 

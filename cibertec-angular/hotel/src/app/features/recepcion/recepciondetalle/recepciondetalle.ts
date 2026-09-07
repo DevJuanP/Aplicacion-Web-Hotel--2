@@ -173,27 +173,41 @@ private cargarClientes(): void {
 }
 
   // Lógica de cálculo reactivo
- calcularTotal(): void {
+calcularTotal(): void {
   const hab = this.habitacion();
   if (!hab) return;
 
+  // 1. Obtener fechas de la señal actual
   const entrada = new Date(this.recepcion().fechaEntrada!);
   const salida = new Date(this.recepcion().fechaSalida!);
 
-  // Calcular diferencia en milisegundos y convertir a días
-  const diffTime = Math.abs(salida.getTime() - entrada.getTime());
-  const diffDays = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
+  // 2. Cálculo de noches (similar a AlquilerComponente)
+  // getTime() devuelve milisegundos. Usamos Math.ceil para redondear hacia arriba
+  const diffTime = salida.getTime() - entrada.getTime();
+  const diffDays = Math.max(0, Math.ceil(diffTime / (1000 * 60 * 60 * 24)));
 
-  // Actualizamos la señal de noches
+  // Actualizamos señal de noches
   this.noches.set(diffDays);
 
+  // 3. Cálculo de montos
+  const precioUnitario = hab.precio || 0;
+  const totalCalculado = diffDays * precioUnitario;
+  const adelanto = this.recepcion().adelanto || 0;
+
+  // 4. Lógica de Restante y Total Pagado
+  // Si adelanto >= total, se paga el total, restante es 0
+  // Si adelanto < total, el restante es la diferencia
+  const totalPagado = adelanto >= totalCalculado ? totalCalculado : adelanto;
+  const precioRestante = Math.max(0, totalCalculado - adelanto);
+
+  // 5. Actualizar la señal del modelo
   this.recepcion.update(r => ({
     ...r,
-    precioInicial: (hab.precio || 0) * diffDays,
-    precioRestante: ((hab.precio || 0) * diffDays) - (r.adelanto || 0)
+    precioInicial: totalCalculado,
+    totalPagado: totalPagado,
+    precioRestante: precioRestante
   }));
 }
-
   // Acciones de registro
   guardar(): void {
     const data = this.recepcion();

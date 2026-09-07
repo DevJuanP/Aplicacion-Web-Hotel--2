@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder // <--- Nota sobre el uso de @Builder
 @Entity
 @Table(name = "HABITACION")
 public class Habitacion {
@@ -47,11 +46,10 @@ public class Habitacion {
 
     // Asignamos valor por defecto para evitar Nulos
     @Column(name = "estado", nullable = false)
-    @Builder.Default
+
     private Boolean estado = true;
 
     @Column(name = "fechacreacion")
-    @Builder.Default
     private LocalDateTime fechaCreacion = LocalDateTime.now();
 
     @JsonIgnore

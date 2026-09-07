@@ -16,6 +16,7 @@ export class AuthService {
   private readonly API_URL = 'http://localhost:8081/api/auth';
  private readonly TOKEN_KEY = 'token';
   private readonly ROLE_KEY = 'user_role';
+  private readonly ID_KEY = 'user_id';
 
   login(credentials: LoginRequest): Observable<ApiResponse<LoginResponse>> {
     return this.http.post<ApiResponse<LoginResponse>>(`${this.API_URL}/login`, credentials)
@@ -25,6 +26,8 @@ export class AuthService {
           if (isPlatformBrowser(this.platformId) && response.data.token) {
             localStorage.setItem(this.TOKEN_KEY, response.data.token);
             localStorage.setItem(this.ROLE_KEY, response.data.tipoPersona);
+            localStorage.setItem(this.ROLE_KEY, response.data.tipoPersona);
+            localStorage.setItem(this.ID_KEY, response.data.idPersona.toString());
           }
         })
       );
@@ -36,6 +39,13 @@ export class AuthService {
       localStorage.removeItem(this.ROLE_KEY);
     }
   }
+
+  getUserId(): string | null {
+  if (isPlatformBrowser(this.platformId)) {
+    return localStorage.getItem(this.ID_KEY);
+  }
+  return null;
+}
 
   getToken(): string | null {
     if (isPlatformBrowser(this.platformId)) {

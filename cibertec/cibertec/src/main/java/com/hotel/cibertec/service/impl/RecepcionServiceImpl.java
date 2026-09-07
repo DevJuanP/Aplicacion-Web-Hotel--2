@@ -102,6 +102,8 @@ public class RecepcionServiceImpl implements RecepcionService {
         }
     }
 
+
+
     @Override
     @Transactional
     public RecepcionDto actualizar(Integer id, RecepcionDto dto) {
@@ -211,5 +213,14 @@ public class RecepcionServiceImpl implements RecepcionService {
         }
 
         return dto;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<RecepcionDto> listarPorCliente(Integer idCliente) {
+        return repository.findByClienteIdAndEstadoWithDetails(idCliente, true)
+                .stream()
+                .map(this::toDtoConDatosCliente)
+                .collect(Collectors.toList());
     }
 }

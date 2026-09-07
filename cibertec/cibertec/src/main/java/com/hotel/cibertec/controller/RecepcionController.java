@@ -82,4 +82,11 @@ public class RecepcionController {
         service.eliminar(id);
         return ResponseEntity.ok(ApiResponse.success("Registro eliminado correctamente"));
     }
+
+    @GetMapping("/cliente/{idCliente}")
+    public ResponseEntity<ApiResponse<?>> listarPorCliente(@PathVariable Integer idCliente) {
+        log.info("Consultando recepciones activas para cliente ID: {}", idCliente);
+        var resultado = service.listarPorCliente(idCliente);
+        return ResponseEntity.ok(ApiResponse.success(resultado));
+    }
 }  
